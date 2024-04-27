@@ -246,4 +246,84 @@ function DetailPage(){
 }
 ```
 
+### 5.抽离组件及组件间传值交互
+
+* 父组件,user-detail/user-detail.tsx
+```tsx
+import UserCard from "../../components/UserCard";
+
+function UserDetail(){
+    // .....
+    const [userInfo, updateUserInfo] = useState({
+        id: idNumber, name, age
+    })
+
+    const updateUser = (id: number) => {
+        console.log("更新用户年龄", id, userInfo,)
+        updateUserInfo({
+            ...userInfo,
+            age: ++userInfo.age
+        })
+    }
+
+    return <div>
+        <h1>Detail Page</h1>
+        <UserCard {...userInfo} updateUser={updateUser}>
+            <div>slot content from parent</div>
+        </UserCard>
+    </div>;
+}
+```
+
+* 子组件,components/UserCard.tsx
+```tsx
+import React from "react"
+
+type withAction = WithChildren<IUser> & {
+    updateUser?: (id: number) => void
+}
+const UserCard: React.FC<withAction> = (props) => {
+    const { id, name, age, children, updateUser } = props
+
+    const updateUserAge = () => {
+        updateUser && updateUser(id)
+    }
+
+    return (
+        <div>
+            <div>
+                <span>User:{id}-</span>
+                <span>{name}-</span>
+                <span>{age}</span>
+                {updateUserAge && (<button onClick={updateUserAge}>更新用户年龄</button>)}
+            </div>
+            <div className="children">
+                {children}
+            </div>
+        </div>
+    )
+}
+
+export default UserCard
+```
+* 将IUser抽离到?.d.ts文件中,方便跨文件通用需要引入或重新定义
+* 在`tsconfig.json`中的`include`添加定义d.ts文件的目录
+```json
+export default {
+    "compilerOptions":{//...},
+    "include": ["src","@types"],
+}
+```
+* 定义一个公用类型,包装原类型添加上children字段
+```tsx
+type WithChildren<T> = T & {
+    children?: React.ReactNode
+}
+```
+* 如果在原IUser上,childrne之外,再附加事件或其他时,一样用&联合类型
+```tsx
+type WithUserEvent = WithChildren<IUser> & {
+    updateUser?: (id: number) => void
+}
+```
 

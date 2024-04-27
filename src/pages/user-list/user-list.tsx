@@ -1,14 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 
-interface IUser {
-    id: number,
-    name: string,
-    age: number
-}
 function UserList() {
     const navigate = useNavigate()
 
-    const userList = [
+    const userList: IUser[] = [
         { id: 1, name: "jack", age: 16 },
         { id: 2, name: "nancy", age: 18 }
     ]
@@ -22,8 +17,11 @@ function UserList() {
             {
                 userList.map(item => {
                     return (
-                        <div key={item.id} className="user-item" onClick={() => handleGoUserDetail(item)}>
-                            ID: {item.id}, Name: {item.name}, Age: {item.age}
+                        <div key={item.id} className="user-item">
+                            <div>
+                                ID: {item.id}, Name: {item.name}, Age: {item.age}
+                            </div>
+                            <div><button onClick={() => handleGoUserDetail(item)}>查看详情</button></div>
                         </div>
                     )
                 })
