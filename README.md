@@ -166,7 +166,9 @@ class LoginPage extends React.Component {
 
 export default LoginPage
 ```
-页面级的组件,因为可能需要监听生命周期,所以都统一使用类组件.
+* ~~页面级的组件,因为可能需要监听生命周期,所以都统一使用类组件.~~,react已经被hooks包围了,使用函数组件更顺手
+* 这里在pages下新增了一层文件夹login,是方便login.scss和login.tsx归属在login目录下
+* 不使用 pages/login/index.tsx,因为多页面时很多index.tsx不利于文件搜索查找
 
 #### 函数组件
 ```tsx
@@ -208,5 +210,40 @@ class ClassCpt extends React.Component {
 }
 ```
 以上,同样的效果,函数组件和类组件的定义和处理响应数据`title`的方式的不一样
+
+### 4.多页面的跳转以及数据传递获取
+
+> 用函数组件改写login.tsx,以useEffect代替componentDidMount
+```tsx
+useEffect(() => {
+    setFormTitle("React管理中心新")
+}, [])
+```
+
+* user-list带路径参数跳转到user-detail页面
+
+```tsx
+function LoginPage(){
+    const navigate = useNavigate(); // 注意，这里不能放在handleLoginSubmit方法里
+    const handleGoUserDetail = (user: IUser) => {
+        navigate(`/user-detail/${user.id}?name=${user.name}&age=${user.age}`)
+    }
+    return ( <div>....</div>)
+}
+```
+
+* user-detail获取路径参数和query参数
+```tsx
+import { useParams } from "react-router-dom";
+
+function DetailPage(){
+    const { id, } = useParams()
+    const params = new URLSearchParams(location.search)
+    const name = params.get('name')
+    const age = params.get('age')
+
+    return ( <div>{id}-{name}-{age}</div>)
+}
+```
 
 
