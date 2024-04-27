@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function UserList() {
     const navigate = useNavigate()
+
+    const loginAdminInfo = useSelector((state: IStoreRoot) => state.user.userInfo)
 
     const userList: IUser[] = [
         { id: 1, name: "jack", age: 16 },
@@ -14,6 +17,7 @@ function UserList() {
 
     return (
         <div className='user-list'>
+            <div>当前登录用户: {loginAdminInfo.name}</div>
             {
                 userList.map(item => {
                     return (

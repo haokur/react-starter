@@ -1,7 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import './login.scss'
+
+import { setUserInfo } from '../../stores/user.store';
 
 function LoginPage() {
     const [formTitle, setFormTitle] = useState("React管理中心")
@@ -23,8 +26,14 @@ function LoginPage() {
     }
 
     const navigate = useNavigate(); // 注意，这里不能放在handleLoginSubmit方法里
+    const dispatch = useDispatch();
     const handleLoginSubmit = () => {
         console.log(loginForm, "登录表单信息");
+        dispatch(setUserInfo({
+            id: 1,
+            name: loginForm.accout,
+            age: 19
+        }))
         navigate("/user-list")
     }
 

@@ -224,7 +224,7 @@ useEffect(() => {
 
 ```tsx
 function LoginPage(){
-    const navigate = useNavigate(); // 注意，这里不能放在handleLoginSubmit方法里
+    const navigate = useNavigate(); // 注意，这里不能放在handleGoUserDetail方法里
     const handleGoUserDetail = (user: IUser) => {
         navigate(`/user-detail/${user.id}?name=${user.name}&age=${user.age}`)
     }
@@ -327,3 +327,118 @@ type WithUserEvent = WithChildren<IUser> & {
 }
 ```
 
+### 6.添加状态管理
+1. 安装依赖
+```sh
+cnpm install react-redux @reduxjs/toolkit --save 
+```
+
+2. 新建stores文件夹
+```
+--stores
+----stores.ts
+----user.store.ts
+```
+
+- user.store.ts
+```ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+const UserStore = createSlice({
+    name: 'user',
+    initialState: {
+        userInfo: {
+            id: 0,
+            name: "",
+            age: 18
+        } as IUser
+    },
+    reducers: {
+        setUserInfo: (state, action: PayloadAction<IUser>) => {
+            state.userInfo = action.payload
+        }
+    }
+});
+
+export const { setUserInfo } = UserStore.actions;
+export default UserStore;
+```
+
+- stores.ts
+```ts
+import { configureStore } from '@reduxjs/toolkit';
+import UserStore from './user.store';
+
+const store = configureStore({
+    reducer: {
+        user: UserStore.reducer
+    }
+});
+
+export default store;
+```
+
+3. App.tsx引入store,并使用Provider包裹main.tsx组件
+- main.tsx
+```ts
+import { Provider } from 'react-redux'
+import stores from './stores/stores'
+
+const rootElement = document.getElementById('root')
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <Provider store={stores}>
+        <App />
+      </Provider>
+    </React.StrictMode>,
+  )
+} else {
+  console.error("root element not found")
+}
+```
+
+4. 使用场景
+- login.tsx 比如ajax拿到登录结果,存储用户信息
+```tsx
+import { useDispatch } from 'react-redux'
+import { setUserInfo } from '../../stores/user.store';
+
+function LoginPage(){
+    const dispatch = useDispatch();
+    const handleLoginSubmit = () => {
+        console.log(loginForm, "登录表单信息");
+        dispatch(setUserInfo({
+            id: 1,
+            name: loginForm.accout,
+            age: 19
+        }))
+        navigate("/user-list")
+    }
+
+    return (
+        <div>{loginForm.name}</div>
+    )
+}
+```
+
+5. 跨页面查看全局状态管理里的值
+- pages/user-list/user-list.tsx
+```ts
+function UserListPage(){
+    const loginAdminInfo = useSelector((state: IStoreRoot) => state.user.userInfo)
+    return (
+        <div>{loginadminInfo.name}</div>
+    )
+}
+```
+其中的IStoreRoot的定义在store.d.ts,对应按模块(这里指user模块)划分的state的值
+按模块分,如下
+```ts
+interface IStoreRoot {
+    user: {
+        userInfo: IUser
+    },
+    counter:ICounter
+}
+```

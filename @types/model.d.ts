@@ -3,3 +3,7 @@ interface IUser {
     name: string,
     age: number,
 }
+
+interface ICounter {
+    currnetValue: number;
+}

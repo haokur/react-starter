@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import UserCard from "../../components/UserCard";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { plusOrReduce } from '../../stores/counter.store'
 
 function Detail() {
     const { id, } = useParams()
@@ -20,8 +23,16 @@ function Detail() {
         })
     }
 
+    const counterValue = useSelector((state: IStoreRoot) => state.counter.currnetValue)
+
+    const dispatch = useDispatch()
+    const setCounterValue = () => dispatch(plusOrReduce(2))
+
     return <div>
-        <h1>Detail Page</h1>
+        <div style={{ margin: "20px" }}>
+            <h1>Detail Page-应用计数{counterValue}</h1>
+            <button onClick={setCounterValue}>计数增加</button>
+        </div>
         <UserCard {...userInfo} updateUser={updateUser}>
             <div>slot content from parent</div>
         </UserCard>
