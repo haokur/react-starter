@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Link to="/login">跳转登录</Link>
+        <Link to="/login">跳转登录2</Link>
       </div>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
