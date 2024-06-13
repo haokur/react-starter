@@ -1,0 +1,1 @@
+import{r as a,u as c,j as t,U as r}from"./index-D9EwOsut.js";const u=function(){const[n,s]=a.useState("Hello"),o=()=>{s(n+1)},e=c(),i=()=>{r.data=null,e("/login")};return t.jsxs("div",{children:[t.jsx("div",{children:t.jsx("button",{onClick:i,children:"退出登录"})}),t.jsxs("div",{children:["this is home- ",n]}),t.jsx("button",{onClick:o,children:"改变数据"})]})};export{u as default};
