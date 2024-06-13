@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
+const env = process.env.NODE_ENV;
+const isProduction = env === 'production'
+
 export default defineConfig({
-  base: '/react-starter',
+  base: isProduction ? '/react-starter' : '',
   build: {
     outDir: "docs",
   },

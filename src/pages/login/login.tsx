@@ -1,54 +1,39 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserInfo } from "../../models/user.model";
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import './login.scss'
-
-import { setUserInfo } from '../../stores/user.store';
-
-function LoginPage() {
-    const [formTitle, setFormTitle] = useState("React管理中心")
-    const [loginForm, setLoginForm] = useState({
-        accout: "admin",
-        password: ""
-    })
-
+const LoginPage = () => {
     useEffect(() => {
-        setFormTitle("React管理中心新")
+        if (UserInfo.data) {
+            navigate("/")
+        }
     }, [])
 
-    function handleLoginFormChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
+    const navigate = useNavigate()
+    const [loginForm, setLoginForm] = useState({
+        name: "jack",
+        password: "123456"
+    })
+
+    const handleLoginFormChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         setLoginForm({
             ...loginForm,
-            [name]: value,
+            [ev.target.name]: ev.target.value
         })
     }
 
-    const navigate = useNavigate(); // 注意，这里不能放在handleLoginSubmit方法里
-    const dispatch = useDispatch();
-    const handleLoginSubmit = () => {
-        console.log(loginForm, "登录表单信息");
-        dispatch(setUserInfo({
-            id: 1,
-            name: loginForm.accout,
-            age: 19
-        }))
-        navigate("/user-list")
+    const handleLogin = () => {
+        localStorage.setItem("user", JSON.stringify(loginForm))
+        navigate("/")
     }
 
     return (
-        <div className='login-container'>
-            <h1 className='login-title'>{formTitle}</h1>
-            <div className="login-form">
-                <div className='login-form__row'><input className='input' type="text" name="accout" value={loginForm.accout} placeholder="请输入账号" onChange={handleLoginFormChange} /></div>
-                <div className='login-form__row'><input className='input' type="password" name="password" value={loginForm.password} placeholder="请输入密码" onChange={handleLoginFormChange} /></div>
-            </div>
-            <div className='login-action'>
-                <button className='login-action__btn' onClick={handleLoginSubmit}>登录</button>
-            </div>
+        <div>
+            <input type="text" name="name" value={loginForm.name} onChange={handleLoginFormChange} />
+            <input type="password" name="password" value={loginForm.password} onChange={handleLoginFormChange} />
+            <button onClick={handleLogin}>登录</button>
         </div>
     )
 }
 
-export default LoginPage
+export default LoginPage;
