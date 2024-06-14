@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { UserInfo } from "../../models/user.model"
 import { Link } from "react-router-dom"
 
 interface IUser {
@@ -17,10 +16,6 @@ const HomePage = function () {
 
     // 退出登录
     const navigate = useNavigate()
-    const handleLogout = () => {
-        UserInfo.data = null
-        navigate("/login")
-    }
 
     // 获取用户列表
     const [userList, setUserList] = useState<IUser[]>([])
@@ -39,9 +34,6 @@ const HomePage = function () {
 
     return (
         <div>
-            <div>
-                <button onClick={handleLogout}>退出登录</button>
-            </div>
             <h3>1.绑定navigate事件响应跳转</h3>
             <div className="user">
                 <ul className="user-list">

@@ -1,0 +1,25 @@
+.nav {
+  width: 200px;
+  height: 100%;
+  background-color: #f5f5f5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow: scroll;
+  &-title {
+    text-align: center;
+    padding: 16px 0;
+    border-bottom: 1px dashed #e6e6e6;
+  }
+  &-list {
+  }
+  &-item {
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    &:hover{
+        color: #260fd2;
+    }
+  }
+}
