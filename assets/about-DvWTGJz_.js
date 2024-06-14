@@ -1,1 +1,0 @@
-import{a as r,b as u,j as n,c as m}from"./index-fdwcD6yQ.js";const o=r,d=function(){const c=o(t=>t.common.count),e=o(t=>t.test.count),s=u(),i=()=>{s(m.actions.increment())};return n.jsxs("div",{children:[n.jsxs("h3",{children:["this is AboutPage-",c,"-",e]}),n.jsx("button",{onClick:i,children:"redux-common-increment"})]})};export{d as default};
