@@ -1,70 +1,43 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+
 import { UserInfo } from '../models/user.model';
-import CommonLayout from '../layouts/CommonLayout';
+import CommonLayout, { FallbackPlaceHolder } from '../layouts/CommonLayout';
+import { RouteConfig } from './routes.config';
 
-const LoginPage = React.lazy(() => import("../pages/login/login"))
-
-const HomePage = React.lazy(() => import('../pages/home/home'))
-const AboutPage = React.lazy(() => import('../pages/about/about'))
-const ContactPage = React.lazy(() => import('../pages/contact/contact'))
-const UserDetailPage = React.lazy(() => import('../pages/user/detail'))
-
-const WithLayoutAndAuth = (props: any) => {
+const Auth = (props: any) => {
     let _user = UserInfo.data
-    let { element, children } = props
-    if (_user) {
-        return <CommonLayout>{element || children}</CommonLayout>
-    } else {
-        return <Navigate to="/login" replace />
-    }
+    let { children } = props
+    return _user ? children : <Navigate to="/login" replace />
 }
 
-export const RouteConfig = [
-    {
-        path: '/login',
-        element: LoginPage,
-        layout: null,
-        meta: { hide: true, name: "登录" }
-    },
-    {
-        path: '/',
-        element: HomePage,
-        layout: 'common',
-        meta: { hide: false, name: "首页" }
-    },
-    {
-        path: '/about',
-        element: AboutPage,
-        layout: 'common',
-        meta: { hide: false, name: "关于我们" }
-    },
-    {
-        path: '/contact',
-        element: ContactPage,
-        layout: 'common',
-        meta: { hide: false, name: "联系我们" }
-    },
-    {
-        path: '/user/detail/:id',
-        element: UserDetailPage,
-        layout: 'common',
-        meta: { hide: true, name: "用户详情" }
-    },
-]
+const getAuthRouteByMeta = (item: any) => {
+    let element = item.meta.auth
+        ? <Auth><item.element /></Auth>
+        : <item.element />
+    return <Route key={item.path} path={item.path} element={element} />
+}
 
-const RouteComponents = RouteConfig.map((item) => {
-    if (item.layout === 'common') {
-        return <Route key={item.path} path={item.path} element={<WithLayoutAndAuth><item.element /></WithLayoutAndAuth>} />
-    }
-    return <Route key={item.path} path={item.path} element={<item.element />} />
-})
+const EmptyLayoutRoutes = RouteConfig.filter(item => !item.layout)
+    .map(item => getAuthRouteByMeta(item))
+
+const CommonLayoutRoutes = RouteConfig
+    .filter(item => item.layout === 'common')
+    .map((item) => getAuthRouteByMeta(item))
+
+
+const unUsedCommonLayoutPaths = RouteConfig
+    .filter(item => item.layout !== 'common')
+    .map((item) => item.path)
 
 const AppRoutes = () => {
     return (
-        <Suspense fallback={<div></div>}>
+        <Suspense fallback={<FallbackPlaceHolder excludes={unUsedCommonLayoutPaths} />}>
             <Routes>
-                {RouteComponents}
+                <Route element={<CommonLayout />}>
+                    {CommonLayoutRoutes}
+                </Route>
+                {EmptyLayoutRoutes}
             </Routes>
         </Suspense>
     );

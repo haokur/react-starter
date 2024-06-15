@@ -9,6 +9,7 @@ interface IUser {
 }
 
 const HomePage = function () {
+    console.log(11111, "home.tsx::12行");
 
     useEffect(() => {
         getUserList()

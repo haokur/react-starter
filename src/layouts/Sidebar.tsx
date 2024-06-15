@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
-import { RouteConfig } from '../routes/routes'
 import './Sidebar.scss'
 import { useNavigate } from 'react-router-dom'
+import { RouteConfig } from '../routes/routes.config'
 
 const Sidebar = () => {
 
