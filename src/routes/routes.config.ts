@@ -1,6 +1,7 @@
 import React from "react"
 
 const LoginPage = React.lazy(() => import("../pages/login/login"))
+const RegisterPage = React.lazy(() => import("../pages/register/register"))
 
 const HomePage = React.lazy(() => import('../pages/home/home'))
 const AboutPage = React.lazy(() => import('../pages/about/about'))
@@ -13,6 +14,12 @@ export const RouteConfig = [
         element: LoginPage,
         layout: null,
         meta: { auth: false, hide: true, name: "登录" }
+    },
+    {
+        path: '/register',
+        element: RegisterPage,
+        layout: null,
+        meta: { auth: false, hide: true, name: "注册" }
     },
     {
         path: '/',

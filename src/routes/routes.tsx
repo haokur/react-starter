@@ -5,34 +5,47 @@ import { UserInfo } from '../models/user.model';
 import CommonLayout, { FallbackPlaceHolder } from '../layouts/CommonLayout';
 import { RouteConfig } from './routes.config';
 
-const Auth = (props: any) => {
-    let _user = UserInfo.data
-    let { children } = props
-    return _user ? children : <Navigate to="/login" replace />
+const beforeEachRoute = (item: any) => {
+    let { name, auth } = item.meta
+    if (name) {
+        Promise.resolve().then(() => {
+            console.log("修改页面标题", name);
+            document.title = name
+        })
+    }
+    if (auth && !UserInfo.data) {
+        return <Navigate to="/login" replace />
+    }
+    return <item.element />
+}
+
+const WithBeforeEach = (item: any) => {
+    return () => {
+        const WithBeforeCheckElement = beforeEachRoute(item)
+        return WithBeforeCheckElement
+    }
 }
 
 const getAuthRouteByMeta = (item: any) => {
-    let element = item.meta.auth
-        ? <Auth><item.element /></Auth>
-        : <item.element />
-    return <Route key={item.path} path={item.path} element={element} />
+    const WithBeforeEachElement = WithBeforeEach(item)
+    return <Route key={item.path} path={item.path} element={<WithBeforeEachElement />} />
 }
 
-const EmptyLayoutRoutes = RouteConfig.filter(item => !item.layout)
-    .map(item => getAuthRouteByMeta(item))
-
-const CommonLayoutRoutes = RouteConfig
-    .filter(item => item.layout === 'common')
-    .map((item) => getAuthRouteByMeta(item))
-
-
-const unUsedCommonLayoutPaths = RouteConfig
-    .filter(item => item.layout !== 'common')
-    .map((item) => item.path)
+const EmptyLayoutRoutes: any[] = []
+const CommonLayoutRoutes: any[] = []
+const UnUsedCommonLayoutPaths: any[] = []
+RouteConfig.forEach(item => {
+    if (item.layout === 'common') {
+        CommonLayoutRoutes.push(getAuthRouteByMeta(item))
+    } else {
+        EmptyLayoutRoutes.push(getAuthRouteByMeta(item))
+        UnUsedCommonLayoutPaths.push(item.path)
+    }
+})
 
 const AppRoutes = () => {
     return (
-        <Suspense fallback={<FallbackPlaceHolder excludes={unUsedCommonLayoutPaths} />}>
+        <Suspense fallback={<FallbackPlaceHolder excludes={UnUsedCommonLayoutPaths} />}>
             <Routes>
                 <Route element={<CommonLayout />}>
                     {CommonLayoutRoutes}

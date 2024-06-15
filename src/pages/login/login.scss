@@ -1,0 +1,41 @@
+.login {
+  padding-top: 200px;
+  &-title {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .form {
+    width: 400px;
+    margin: 0 auto;
+    &-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      &__label {
+        font-weight: 700;
+        font-size: 20px;
+      }
+      &__content {
+        margin-left: 8px;
+        line-height: 40px;
+        padding: 0 10px;
+        flex: 1;
+        font-size: 16px;
+      }
+    }
+    &-action {
+      width: 100%;
+      margin-top: 20px;
+      &__item {
+        width: 100%;
+        line-height: 40px;
+        font-size: 16px;
+      }
+    }
+    &-more {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+  }
+}
