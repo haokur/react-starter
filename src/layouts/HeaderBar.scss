@@ -2,7 +2,6 @@
   width: 100%;
   height: 60px;
   box-sizing: border-box;
-  padding-left: 220px;
   padding-right: 20px;
   background-color: pink;
   position: fixed;
@@ -13,14 +12,32 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  transition: all 0.3s 0.05s;
+  .left {
+    display: flex;
+    align-items: center;
+    .header-expand {
+      // background-color: skyblue;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      margin-right: 10px;
+      margin-left: -10px;
+    }
+  }
   &-title {
     font-size: 20px;
   }
   &-user {
-      display: flex;
-      align-items: center;
-      &_logout{
-        margin-left: 10px;
-      }
+    display: flex;
+    align-items: center;
+    &_logout {
+      margin-left: 10px;
+    }
   }
 }

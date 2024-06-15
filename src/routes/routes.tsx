@@ -9,7 +9,6 @@ const beforeEachRoute = (item: any) => {
     let { name, auth } = item.meta
     if (name) {
         Promise.resolve().then(() => {
-            console.log("修改页面标题", name);
             document.title = name
         })
     }

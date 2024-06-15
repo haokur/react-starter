@@ -25,19 +25,19 @@ export const RouteConfig = [
         path: '/',
         element: HomePage,
         layout: 'common',
-        meta: { auth: true, hide: false, name: "首页" }
+        meta: { auth: true, hide: false, name: "首页", icon: 'icon-home' }
     },
     {
         path: '/about',
         element: AboutPage,
         layout: 'common',
-        meta: { auth: true, hide: false, name: "关于我们" }
+        meta: { auth: true, hide: false, name: "关于我们", icon: "icon-idea" }
     },
     {
         path: '/contact',
         element: ContactPage,
         layout: 'common',
-        meta: { auth: true, hide: false, name: "联系我们" }
+        meta: { auth: true, hide: false, name: "联系我们", icon: "icon-zuanshi1" }
     },
     {
         path: '/user/detail/:id',

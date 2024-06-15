@@ -1,0 +1,18 @@
+.layout {
+  &--open {
+    .header {
+      padding-left: 220px;
+    }
+    .main {
+      padding-left: 220px;
+    }
+  }
+  &--close {
+    .header {
+      padding-left: 80px;
+    }
+    .main {
+      padding-left: 80px;
+    }
+  }
+}
