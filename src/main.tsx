@@ -9,7 +9,7 @@ import { AppContext, AppInitialData } from './contexts/app.context'
 import stores from './stores/stores'
 
 const rootElement = document.getElementById('root')
-const isStrictMode = true
+const isStrictMode = false
 if (rootElement) {
 
   const WithStoreApp = () => <Provider store={stores}><App /></Provider>

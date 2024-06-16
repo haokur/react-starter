@@ -7,6 +7,7 @@ const HomePage = React.lazy(() => import('../pages/home/home'))
 const AboutPage = React.lazy(() => import('../pages/about/about'))
 const ContactPage = React.lazy(() => import('../pages/contact/contact'))
 const UserDetailPage = React.lazy(() => import('../pages/user/detail'))
+const ClassVsFunc = React.lazy(() => import('../pages/class-vs-func/class-vs-func'))
 
 export const RouteConfig = [
     {
@@ -44,5 +45,11 @@ export const RouteConfig = [
         element: UserDetailPage,
         layout: 'common',
         meta: { auth: true, hide: true, name: "用户详情" }
+    },
+    {
+        path: '/class-vs-func',
+        element: ClassVsFunc,
+        layout: 'common',
+        meta: { auth: true, hide: false, name: "类组件与函数组件", icon: "icon-rili" }
     },
 ]
