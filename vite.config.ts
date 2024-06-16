@@ -7,7 +7,7 @@ const isProduction = env === 'production'
 export default defineConfig({
   base: isProduction ? '/react-starter' : '',
   build: {
-    outDir: "docs",
+    outDir: "dist",
   },
   plugins: [react()],
 })

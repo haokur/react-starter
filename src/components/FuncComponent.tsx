@@ -19,11 +19,13 @@ const FuncComponent: React.FC<IMyProps> = (props) => {
         timestamp: Date.now(),
     })
 
-    const getDerivedStateFromProps = useEffect(() => {
+    // const getDerivedStateFromProps = 
+    useEffect(() => {
         console.log("getDerivedStateFromProps::", props, state)
     }, [state, props])
 
-    const componentDidMount = useEffect(() => {
+    // const componentDidMount = 
+    useEffect(() => {
         console.log("componentDidMount::", props, state)
 
         const componentWillUnmount = () => {
@@ -32,7 +34,8 @@ const FuncComponent: React.FC<IMyProps> = (props) => {
         return componentWillUnmount
     }, [])
 
-    const componentDidUpdate = useEffect(() => {
+    // const componentDidUpdate = 
+    useEffect(() => {
         console.log("componentDidUpdate::", state)
     }, [state])
 

@@ -33,7 +33,7 @@ class ErrorTrigger extends React.Component<IProps> {
     // }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<{}>, snapshot?: any): void {
-        console.log('子组件componentDidUpdate调用', prevProps, prevState);
+        console.log('子组件componentDidUpdate调用', prevProps, prevState, snapshot);
         if (prevProps.count === 9 || this.state.lifeCycleError) {
             throw new Error('ErrorTrigger error')
         }

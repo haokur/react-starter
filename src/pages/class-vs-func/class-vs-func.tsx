@@ -4,7 +4,7 @@ import ClassComponent from "../../components/ClassComponent"
 import FuncComponent from "../../components/FuncComponent"
 
 const ClassVsFunc = () => {
-    const [classState, setClassState] = useState({ name: "jack" })
+    const [classState] = useState({ name: "jack" })
 
     return <div>
         <ClassComponent name={classState.name}></ClassComponent>
