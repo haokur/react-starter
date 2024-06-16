@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import App from './App'
 import './styles/basic.scss'
 
-import { AppContext, AppInitialData } from './contexts/app.context'
+import { AppContext, AppInitialData, IAppConfig } from './contexts/app.context'
 import stores from './stores/stores'
 
 const rootElement = document.getElementById('root')
@@ -15,7 +15,8 @@ if (rootElement) {
   const WithStoreApp = () => <Provider store={stores}><App /></Provider>
 
   const WithAppContextApp = () => {
-    const [appConfig, updateAppConfig] = useState(AppInitialData)
+    const [appConfig, updateAppConfig] = useState<IAppConfig>(AppInitialData)
+
     return (
       <AppContext.Provider value={{ appConfig, updateAppConfig }}>
         <WithStoreApp />

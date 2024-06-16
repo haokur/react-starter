@@ -2,9 +2,9 @@
 import { createContext } from "react";
 
 export const AppInitialData = { isSidebarOpen: true }
-type IUpdateParams = Partial<typeof AppInitialData>;
+export type IAppConfig = typeof AppInitialData
 
 export const AppContext = createContext({
     appConfig: AppInitialData,
-    updateAppConfig: (ev: IUpdateParams) => { ev }
+    updateAppConfig: (ev: React.SetStateAction<IAppConfig>) => { ev }
 })
