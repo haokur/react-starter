@@ -12,3 +12,4 @@
 
 [5. 全局Context状态注入和路由菜单处理](https://github.com/haokur/react-starter/issues/5)
 
+[6.类组件与函数组件](https://github.com/haokur/react-starter/issues/6)
