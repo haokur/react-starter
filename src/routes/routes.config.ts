@@ -9,6 +9,7 @@ const ContactPage = React.lazy(() => import('../pages/contact/contact'))
 const UserDetailPage = React.lazy(() => import('../pages/user/detail'))
 const ClassVsFunc = React.lazy(() => import('../pages/class-vs-func/class-vs-func'))
 const CommonHooks = React.lazy(() => import('../pages/common-hooks/common-hooks'))
+const HocTest = React.lazy(() => import('../pages/hoc-test/hoc-test'))
 
 export const RouteConfig = [
     {
@@ -58,5 +59,11 @@ export const RouteConfig = [
         element: CommonHooks,
         layout: 'common',
         meta: { auth: true, hide: false, name: "常用hooks", icon: "icon-fenlei-copy" }
+    },
+    {
+        path: '/hoc-test',
+        element: HocTest,
+        layout: 'common',
+        meta: { auth: true, hide: false, name: "高阶组件", icon: "icon-heart" }
     },
 ]
