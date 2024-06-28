@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import Button, { IExposeFunction } from "../../components/Button";
 
 interface IUser {
     id: string,
@@ -33,8 +34,16 @@ const HomePage = function () {
         navigate(`/user/detail/${id}?name=${name}&age=${age}`)
     }
 
+    const buttonRef = useRef<IExposeFunction>(null)
+    buttonRef.current?.doSomething()
+
+
+
     return (
         <div>
+            <div>
+                <Button config={{}} ref={buttonRef}></Button>
+            </div>
             <h3>1.绑定navigate事件响应跳转</h3>
             <div className="user">
                 <ul className="user-list">

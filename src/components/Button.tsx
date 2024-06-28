@@ -1,5 +1,27 @@
-const Button = (props: any) => {
+import { useImperativeHandle, forwardRef } from 'react';
 
-    return <div>{props.buttonText}</div>
+export interface IExposeFunction {
+    doSomething: () => void,
 }
-export default Button
+
+
+interface IProps {
+    config: Object,
+    children?: React.ReactNode,
+}
+
+const RefChild = forwardRef<IExposeFunction, IProps>((props, ref) => {
+
+    const doSomething = () => { };
+
+    useImperativeHandle(ref, () => ({
+        doSomething
+    }));
+
+    return <div></div>;
+});
+
+export default RefChild;
+
+
+

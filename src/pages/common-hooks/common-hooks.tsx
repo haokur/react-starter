@@ -11,18 +11,25 @@ import './common-hooks.scss'
 import testImg from '../../assets/pix.png'
 import { AppContext } from "../../contexts/app.context";
 
-interface IReducerState {
-    count: number
+interface ICountReducerState {
+    count: number,
+    name?: string,
 }
-const reducer = (state: IReducerState, action: { type: string }) => {
-    switch (action.type) {
-        case 'increment':
-            return { count: state.count + 1 }
-        case 'decrement':
-            return { count: state.count - 1 }
-        default:
-            throw new Error()
+interface ICountReducerAction {
+    type: 'increment' | 'decrement',
+    payload?: any
+}
+type ICountHandler = Record<string, (payload: ICountReducerAction["payload"]) => Partial<ICountReducerState>>
+
+const reducer = (state: ICountReducerState, action: ICountReducerAction) => {
+    let _actionMap: ICountHandler = {
+        'increment': (payload) => { return { count: state.count + payload } },
+        'decrement': (payload) => { return { count: state.count - payload } }
     }
+
+    let _actionFunc = _actionMap[action.type]
+    if (_actionFunc) return { ...state, ..._actionFunc(action.payload) }
+    throw new Error(`action type is undefined`)
 }
 
 const CommonHooks = () => {
@@ -110,11 +117,15 @@ const CommonHooks = () => {
     }
 
     // useReducer,dispatch改变值时,会触发重新渲染
-    const [reducerInfo, dispatch] = useReducer(reducer, { count: 0 })
+    const [reducerInfo, dispatch] = useReducer(reducer, { count: 0, name: 'jack' })
     const handleReducerAction = () => {
         dispatch({
             type: "increment",
+            payload: 1
         })
+    }
+    const getReducerData = () => {
+        console.log(reducerInfo, "common-hooks.tsx::134行");
     }
 
     // useContext
@@ -168,7 +179,9 @@ const CommonHooks = () => {
             <h3>6.useReducer</h3>
             <div>
                 <div>reducerInfo-{reducerInfo.count}</div>
+                <div>reducerInfo-{reducerInfo.name}</div>
                 <button onClick={handleReducerAction}>触发reducer的dispatch</button>
+                <button onClick={getReducerData}>查询reducer的状态</button>
             </div>
         </div>
         <div>

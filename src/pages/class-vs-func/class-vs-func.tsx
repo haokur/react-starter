@@ -3,6 +3,7 @@ import { useState } from "react"
 import ClassComponent from "../../components/ClassComponent"
 import FuncComponent from "../../components/FuncComponent"
 
+
 const ClassVsFunc = () => {
     const [classState] = useState({ name: "jack" })
 

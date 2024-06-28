@@ -4,7 +4,7 @@ import { commonSlice } from "../../stores/common.slice";
 
 const AboutPage = function () {
     console.log("AboutPage render", "about.tsx::6行");
-    const count = useTypedSelector(state => state.common.count)
+    const count = useTypedSelector(state => state.other.count)
     const count2 = useTypedSelector(state => state.test.count)
 
     const dispatch = useDispatch();
