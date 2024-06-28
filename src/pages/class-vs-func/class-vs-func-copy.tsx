@@ -7,7 +7,7 @@ interface IProps {
     children?: React.ReactNode,
 }
 
-const ClassVsFuncCopy: React.FC<IProps> = (props) => {
+const ClassVsFuncCopy: React.FC<IProps> = (_) => {
 
     const count = useTypedSelector(state => state.other.count)
     const dispatch = useDispatch();

@@ -10,7 +10,7 @@ interface IProps {
     children?: React.ReactNode,
 }
 
-const RefChild = forwardRef<IExposeFunction, IProps>((props, ref) => {
+const RefChild = forwardRef<IExposeFunction, IProps>((_, ref) => {
 
     const doSomething = () => { };
 
