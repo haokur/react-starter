@@ -1,4 +1,5 @@
 import React from "react"
+import Test from "../pages/test/test"
 
 const LoginPage = React.lazy(() => import("../pages/login/login"))
 const RegisterPage = React.lazy(() => import("../pages/register/register"))
@@ -65,5 +66,11 @@ export const RouteConfig = [
         element: HocTest,
         layout: 'common',
         meta: { auth: true, hide: false, name: "高阶组件", icon: "icon-heart" }
+    },
+    {
+        path: '/test',
+        element: Test,
+        layout: 'common',
+        meta: { auth: true, hide: false, name: "测试", icon: "icon-heart" }
     },
 ]
